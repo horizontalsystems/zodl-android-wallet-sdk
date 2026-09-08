@@ -30,6 +30,19 @@ and this library adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   server on the next evaluation (MOB-1832).
 - `Synchronizer` gains both members as abstract, so any implementer or test fake must now provide them
   (MOB-1832).
+- `PaymentUriParser`, a Rust-backed API that validates Bitcoin, Ethereum, Litecoin, and Solana
+  payment URIs and returns typed payment request models without floating-point amount conversion.
+
+### Changed
+- **Breaking: the published artifacts have moved to the Maven group `com.zodl.android`, from
+  `cash.z.ecc.android`.** All five publications are affected - `zcash-android-sdk`,
+  `zcash-android-backend`, `zcash-android-sdk-incubator`, `lightwallet-client` and
+  `zcash-android-sdk-slipstream` - so `cash.z.ecc.android:zcash-android-sdk` becomes
+  `com.zodl.android:zcash-android-sdk`, and so on for the rest. Consumers must update their dependency
+  coordinates, and any repository content filter naming the old group - an `includeGroup("cash.z.ecc.android")`
+  on the snapshot repository, say - must name `com.zodl.android` instead, or resolution fails with an
+  unresolved-dependency error and no hint as to why. Java/Kotlin package names are unchanged: only the
+  publication coordinates move, so no import or call site needs editing.
 
 ### Fixed
 - `Synchronizer.getFastestServers` now actually streams the latest blocks in its second validation stage.
@@ -55,12 +68,39 @@ and this library adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The benchmark's wallet-client disposal is capped at five seconds. It runs uncancellably, so a gRPC
   shutdown that hangs rather than throws would otherwise be unstoppable and would wedge every later
   evaluation behind it (MOB-1832).
+- Sends no longer crash with "database is locked" when they race the synchronizer's own
+  block-write bursts on the same wallet database; the connection now waits up to 15s for the
+  lock instead of failing instantly (MOB-1743).
+- `WalletCoordinator` no longer crashes the app on every launch when the persisted wallet's seed
+  does not match the existing wallet database (`InitializeException.SeedNotRelevant`, e.g. a
+  long-lived wallet originally created under a different app). The failure is now caught and
+  exposed via the new `WalletCoordinator.isSeedMismatch: StateFlow<Boolean>` instead of
+  propagating out of `synchronizerOrLockoutId`. This is also caught for the Slipstream engine,
+  which defers this failure past `Synchronizer.new()` rather than throwing it synchronously -
+  the previous fix attempt only covered the synchronous (default-engine) case, so it was dead
+  code on the default Slipstream build. New `Synchronizer.setupError: StateFlow<Throwable?>`
+  carries the same latched failure `onSetupErrorHandler` does, so `WalletCoordinator` can detect
+  it without taking over that single-slot handler - which a host app assigns its own handler to
+  on every synchronizer it receives, and whichever side assigned it last would otherwise silently
+  disable the other's setup-error handling (MOB-1397).
+- The Sapling proving parameters download (`SaplingParams`, ~50MB spend params) now retries up to
+  3 attempts with exponential backoff on `IOException` instead of failing outright on the first
+  transient network blip. Previously, a single `SocketTimeoutException` or `UnknownHostException`
+  resolving `download.z.cash` mid-download aborted `createProposedTransactions` before the actual
+  broadcast was ever attempted, and since nothing was cached on failure, the same full download
+  re-ran from scratch on every subsequent send attempt (MOB-1744).
+
+### Removed
+- The internal EIP-681 payment-URI types in `zcash-android-backend` - `Eip681`,
+  `RustEip681Tool` and `JniEip681TransactionRequest` under `cash.z.ecc.android.sdk.internal`, together
+  with their Rust counterpart - in favour of `PaymentUriParser`, which covers Ethereum alongside
+  Bitcoin, Litecoin and Solana. They sat under an `internal` package but were Kotlin-`public` on the
+  `zcash-android-backend` surface, so a consumer that reached for them directly must move to
+  `PaymentUriParser` (#7).
 
 ## [3.1.1] - 2026-08-25
 
 ### Added
-- `PaymentUriParser`, a Rust-backed API that validates Bitcoin, Ethereum, Litecoin, and Solana
-  payment URIs and returns typed payment request models without floating-point amount conversion.
 - `TransactionEncoderException.InsufficientFundsException` is thrown - by both the upstream and the
   Slipstream engine - when a proposal cannot be created because the account lacks the spendable funds
   to cover the requested amount together with its fee. It replaces
@@ -84,27 +124,6 @@ and this library adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All JNI entry points now convert caller-supplied numeric arguments (network ids, the UTXO
   output index, Tor dormant mode) with checked conversions instead of unchecked casts, so
   out-of-range values fail with an exception instead of silently wrapping (MOB-1764).
-- Sends no longer crash with "database is locked" when they race the synchronizer's own
-  block-write bursts on the same wallet database; the connection now waits up to 15s for the
-  lock instead of failing instantly (MOB-1743).
-- `WalletCoordinator` no longer crashes the app on every launch when the persisted wallet's seed
-  does not match the existing wallet database (`InitializeException.SeedNotRelevant`, e.g. a
-  long-lived wallet originally created under a different app). The failure is now caught and
-  exposed via the new `WalletCoordinator.isSeedMismatch: StateFlow<Boolean>` instead of
-  propagating out of `synchronizerOrLockoutId`. This is also caught for the Slipstream engine,
-  which defers this failure past `Synchronizer.new()` rather than throwing it synchronously -
-  the previous fix attempt only covered the synchronous (default-engine) case, so it was dead
-  code on the default Slipstream build. New `Synchronizer.setupError: StateFlow<Throwable?>`
-  carries the same latched failure `onSetupErrorHandler` does, so `WalletCoordinator` can detect
-  it without taking over that single-slot handler - which a host app assigns its own handler to
-  on every synchronizer it receives, and whichever side assigned it last would otherwise silently
-  disable the other's setup-error handling (MOB-1397).
-- The Sapling proving parameters download (`SaplingParams`, ~50MB spend params) now retries up to
-  3 attempts with exponential backoff on `IOException` instead of failing outright on the first
-  transient network blip. Previously, a single `SocketTimeoutException` or `UnknownHostException`
-  resolving `download.z.cash` mid-download aborted `createProposedTransactions` before the actual
-  broadcast was ever attempted, and since nothing was cached on failure, the same full download
-  re-ran from scratch on every subsequent send attempt (MOB-1744).
 
 ## [3.1.0] - 2026-08-20
 
