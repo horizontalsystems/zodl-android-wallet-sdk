@@ -1,0 +1,58 @@
+name: HS Publish to git maven
+
+# Builds all SDK artifacts (Rust + Kotlin, Slipstream enabled) from the current
+# ref and publishes them to the `maven` branch of this fork, which is consumed as
+#   maven { url = uri("https://raw.githubusercontent.com/horizontalsystems/zodl-android-wallet-sdk/maven/") }
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g. 3.1.1-hs.1)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Setup toolchains (JDK, NDK, Rust)
+        uses: ./.github/actions/setup
+        timeout-minutes: 60
+
+      - name: Build and publish to local maven
+        timeout-minutes: 150
+        env:
+          ORG_GRADLE_PROJECT_LIBRARY_VERSION: ${{ inputs.version }}
+          ORG_GRADLE_PROJECT_IS_SNAPSHOT: "false"
+        run: ./gradlew publishToMavenLocal --no-daemon
+
+      - name: Checkout maven branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: maven
+          path: maven-repo
+
+      - name: Copy artifacts into maven branch
+        run: |
+          mkdir -p maven-repo/com
+          cp -R "$HOME/.m2/repository/com/zodl" maven-repo/com/
+          cd maven-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add com
+          git commit -m "Publish ${{ inputs.version }} from ${GITHUB_SHA}"
+          git push origin maven
+
+      - name: Upload artifacts as run backup
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: maven-artifacts-${{ inputs.version }}
+          path: ~/.m2/repository/com/zodl
+          retention-days: 30
