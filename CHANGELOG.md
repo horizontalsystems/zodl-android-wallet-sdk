@@ -6,6 +6,8 @@ and this library adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-09-08
+
 ### Added
 - `Synchronizer.evaluateServerSwitch(current, candidates, fetchThreshold, blocksToFetch)` benchmarks the
   current server together with every candidate endpoint (RPC validation, then a timed compact-block stream
