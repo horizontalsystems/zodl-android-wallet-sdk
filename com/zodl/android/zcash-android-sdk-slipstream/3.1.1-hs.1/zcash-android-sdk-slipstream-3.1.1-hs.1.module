@@ -1,0 +1,149 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.zodl.android",
+    "module": "zcash-android-sdk-slipstream",
+    "version": "3.1.1-hs.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.13"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "zcash-android-sdk-slipstream-3.1.1-hs.1.aar",
+          "url": "zcash-android-sdk-slipstream-3.1.1-hs.1.aar",
+          "size": 442748,
+          "sha512": "a5f8430e05e8db8771f511e568f8767d109b17071789d98bdfab473cee2a1f5f01a35abb9e9eab8e244e913f53e74a777439c1d9bad20638d0f72573be504668",
+          "sha256": "c1310de140c56ee56fccc17bac77f0bbe2ca21d594688c5da4a6903d9a78e0c1",
+          "sha1": "3c78aa56df4037fd6868549cfa1173f5a0bb1da8",
+          "md5": "a2f7ea28906d4aea24111b1cf5494633"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.zodl.android",
+          "module": "zcash-android-sdk",
+          "version": {
+            "requires": "3.1.1-hs.1"
+          }
+        },
+        {
+          "group": "com.zodl.android",
+          "module": "zcash-android-backend",
+          "version": {
+            "requires": "3.1.1-hs.1"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core-ktx",
+          "version": {
+            "requires": "1.15.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-android",
+          "version": {
+            "requires": "1.10.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "zcash-android-sdk-slipstream-3.1.1-hs.1.aar",
+          "url": "zcash-android-sdk-slipstream-3.1.1-hs.1.aar",
+          "size": 442748,
+          "sha512": "a5f8430e05e8db8771f511e568f8767d109b17071789d98bdfab473cee2a1f5f01a35abb9e9eab8e244e913f53e74a777439c1d9bad20638d0f72573be504668",
+          "sha256": "c1310de140c56ee56fccc17bac77f0bbe2ca21d594688c5da4a6903d9a78e0c1",
+          "sha1": "3c78aa56df4037fd6868549cfa1173f5a0bb1da8",
+          "md5": "a2f7ea28906d4aea24111b1cf5494633"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "zcash-android-sdk-slipstream-3.1.1-hs.1-sources.jar",
+          "url": "zcash-android-sdk-slipstream-3.1.1-hs.1-sources.jar",
+          "size": 70548,
+          "sha512": "ba2fc722db81db156681c52166a7ce6cc7d9f347a0c7256703264b79357641184182f8d63061c7cda9a7e6f61c1678e088bdc521ee4473129f387c0aa411989a",
+          "sha256": "cdb4cf303b429938fd3b24ee1dd13cfc9bd15b76b7d8c7e985e27f59c5397c66",
+          "sha1": "1fd04c09e58f3e4f30474fe3cfdcbc698530f310",
+          "md5": "308712e9fdf47affceab306530206547"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "zcash-android-sdk-slipstream-3.1.1-hs.1-javadoc.jar",
+          "url": "zcash-android-sdk-slipstream-3.1.1-hs.1-javadoc.jar",
+          "size": 375153,
+          "sha512": "2e55f55b3ec09d3cdda8afacaa54426767a1df3a74da18ba4aff9432cdc30d833e8dd739c2756cbed6b417e94d4022bf12c5831be8a0b0bacba5c4d728128400",
+          "sha256": "9ff665e53b0a842a0027e926bf7f9ae0f11d32668513f7c275063904f9c70d7b",
+          "sha1": "af3386f6e2e62b444a8ea61bc4884ad0c1c2364d",
+          "md5": "ecd274ccc8a6853e88e62ba14cd07b86"
+        }
+      ]
+    }
+  ]
+}

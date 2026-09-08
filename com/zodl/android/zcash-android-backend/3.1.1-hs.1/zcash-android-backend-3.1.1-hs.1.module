@@ -1,0 +1,172 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.zodl.android",
+    "module": "zcash-android-backend",
+    "version": "3.1.1-hs.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.13"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.zodl.android",
+          "module": "lightwallet-client",
+          "version": {
+            "requires": "3.1.1-hs.1"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-core",
+          "version": {
+            "requires": "3.4.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "zcash-android-backend-3.1.1-hs.1.aar",
+          "url": "zcash-android-backend-3.1.1-hs.1.aar",
+          "size": 77351353,
+          "sha512": "bd34e27156c41f6f8aa85c38359f51fe60132d6a5d1c63c1b1cc3a5f93989047c93e36a7253288f73ad2e57d8e4f9361cf506945a6d32861a924a6f34603ac0e",
+          "sha256": "1a370a51d0045182ea4a6354eb140edea19fc63626159b169c4826131ae7be90",
+          "sha1": "65edfa9cbfc8d6081e954443af228a7361b34e8f",
+          "md5": "d8dd5fff547bf90a694a087df318cc0f"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-kotlin-lite",
+          "version": {
+            "requires": "4.34.0"
+          }
+        },
+        {
+          "group": "io.grpc",
+          "module": "grpc-protobuf-lite",
+          "version": {
+            "requires": "1.78.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-android",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "com.zodl.android",
+          "module": "lightwallet-client",
+          "version": {
+            "requires": "3.1.1-hs.1"
+          }
+        },
+        {
+          "group": "io.ktor",
+          "module": "ktor-client-core",
+          "version": {
+            "requires": "3.4.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "zcash-android-backend-3.1.1-hs.1.aar",
+          "url": "zcash-android-backend-3.1.1-hs.1.aar",
+          "size": 77351353,
+          "sha512": "bd34e27156c41f6f8aa85c38359f51fe60132d6a5d1c63c1b1cc3a5f93989047c93e36a7253288f73ad2e57d8e4f9361cf506945a6d32861a924a6f34603ac0e",
+          "sha256": "1a370a51d0045182ea4a6354eb140edea19fc63626159b169c4826131ae7be90",
+          "sha1": "65edfa9cbfc8d6081e954443af228a7361b34e8f",
+          "md5": "d8dd5fff547bf90a694a087df318cc0f"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "zcash-android-backend-3.1.1-hs.1-sources.jar",
+          "url": "zcash-android-backend-3.1.1-hs.1-sources.jar",
+          "size": 103408,
+          "sha512": "39095ebf24c299577b3cd538804e8b21506c28e5fe8c12bfc3b54486a262bc87b84996ef26171cb2742c2875af4b13b5a839e278652ad38829b09e7588619e55",
+          "sha256": "9634a9e5d1fabcbdc8b8449957493848d0a1ab0fedffca9ca38fb5a9235e5e1d",
+          "sha1": "cb3cbdb5b2df78fdfbc886caf77ef6cac8719888",
+          "md5": "2cd2a544f972bd7b4d849f1b82008309"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "zcash-android-backend-3.1.1-hs.1-javadoc.jar",
+          "url": "zcash-android-backend-3.1.1-hs.1-javadoc.jar",
+          "size": 1140254,
+          "sha512": "8bd80024d956f89d4054ba381b365032a7f01f95c1e0458ebc11e1a5713d25c453d0546a9088c77f749dac9c4edd01e80ead6a07a2e7e6c92a86b408404ab26c",
+          "sha256": "d220874c0b1edc2614f98721ee420451fd76f6bc95986726350933fda4848d9c",
+          "sha1": "901abed95ce15d6341d1a71dffe723481685a6d0",
+          "md5": "fb58aa9f3653a0866a6d326a9ea52faa"
+        }
+      ]
+    }
+  ]
+}
