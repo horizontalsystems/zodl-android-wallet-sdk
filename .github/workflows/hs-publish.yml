@@ -81,6 +81,8 @@ jobs:
         with:
           ref: maven
           path: maven-repo
+          # The maven branch ruleset only lets deploy keys push; GITHUB_TOKEN cannot
+          ssh-key: ${{ secrets.MAVEN_DEPLOY_KEY }}
 
       - name: Copy artifacts into maven branch
         if: ${{ inputs.publish }}
