@@ -1,0 +1,156 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.zodl.android",
+    "module": "zcash-android-sdk-incubator",
+    "version": "3.2.0-hs.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.13"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "zcash-android-sdk-incubator-3.2.0-hs.1.aar",
+          "url": "zcash-android-sdk-incubator-3.2.0-hs.1.aar",
+          "size": 153365,
+          "sha512": "f93c605004969abeaffb9bbe7c8e29f7ac1baf187bbb1cb6621e1aee444a73ab2d13b24e6697611e242721b5ff7ba47054305cc3689c0e2a606617a819a43f01",
+          "sha256": "8d2c7b1f457d383ac81d7929ca8012806efcbbd287eba04fa0633b107ff30741",
+          "sha1": "fcee13fa7bcb2a3e665618e7a4b9dcfd4cd7b6c6",
+          "md5": "0653d6358f8f432ccd171486234571fb"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.zodl.android",
+          "module": "zcash-android-sdk-slipstream",
+          "version": {
+            "requires": "3.2.0-hs.1"
+          }
+        },
+        {
+          "group": "com.zodl.android",
+          "module": "zcash-android-sdk",
+          "version": {
+            "requires": "3.2.0-hs.1"
+          }
+        },
+        {
+          "group": "cash.z.ecc.android",
+          "module": "kotlin-bip39",
+          "version": {
+            "requires": "1.0.9"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.9.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.7.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-android",
+          "version": {
+            "requires": "1.10.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "zcash-android-sdk-incubator-3.2.0-hs.1.aar",
+          "url": "zcash-android-sdk-incubator-3.2.0-hs.1.aar",
+          "size": 153365,
+          "sha512": "f93c605004969abeaffb9bbe7c8e29f7ac1baf187bbb1cb6621e1aee444a73ab2d13b24e6697611e242721b5ff7ba47054305cc3689c0e2a606617a819a43f01",
+          "sha256": "8d2c7b1f457d383ac81d7929ca8012806efcbbd287eba04fa0633b107ff30741",
+          "sha1": "fcee13fa7bcb2a3e665618e7a4b9dcfd4cd7b6c6",
+          "md5": "0653d6358f8f432ccd171486234571fb"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "zcash-android-sdk-incubator-3.2.0-hs.1-sources.jar",
+          "url": "zcash-android-sdk-incubator-3.2.0-hs.1-sources.jar",
+          "size": 24529,
+          "sha512": "6803aaaa9e6dde397067d5f192d8cbbe3c20a1da2169743899f8afd39e14b68b42c50e6f35006a13cd4d16d2c2a9d58379beda1e87fe91f6fc0ed8faa325abbe",
+          "sha256": "e3dff34fb06f1c2e2d7edc4f528feb3a7a964d60bf8ebb016565dd61df963b45",
+          "sha1": "482f12cb48714b0336661af44b28d6b37017689f",
+          "md5": "052925925f0d046dd8aa2d472c50210a"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "zcash-android-sdk-incubator-3.2.0-hs.1-javadoc.jar",
+          "url": "zcash-android-sdk-incubator-3.2.0-hs.1-javadoc.jar",
+          "size": 449831,
+          "sha512": "7fd1d186e7c3f27aabea4573c5790d37a7bd924ab842a31e8bac06859e2bdac6becff5ebecc02e6ad8e4c000a990d46a8e8944ce268ddcb5255626e8aa09ee2e",
+          "sha256": "53ea233a4ca4ebbd00d90d86b8ae2f4384aa2ccd8e71b14ec23b30dbe97a07d9",
+          "sha1": "22267413f6e6a93438dcb5968bad7465ad2f0015",
+          "md5": "ef6602ed95f9a9019d7b7ceb4fdc2d4d"
+        }
+      ]
+    }
+  ]
+}
