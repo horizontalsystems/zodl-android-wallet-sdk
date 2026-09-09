@@ -3,6 +3,11 @@ name: HS Publish to git maven
 # Builds all SDK artifacts (Rust + Kotlin, Slipstream enabled) from the current
 # ref and publishes them to the `maven` branch of this fork, which is consumed as
 #   maven { url = uri("https://raw.githubusercontent.com/horizontalsystems/zodl-android-wallet-sdk/maven/") }
+#
+# Toolchain setup is done here rather than through .github/actions/setup: that
+# composite action warms the whole SDK (demo-app included) on every cache miss and
+# its cache-save steps reference outputs that do not exist, so nothing it restores
+# ever hits. The steps below mirror its JDK/NDK/Rust installation exactly.
 on:
   workflow_dispatch:
     inputs:
@@ -10,6 +15,11 @@ on:
         description: "Version to publish (e.g. 3.1.1-hs.1)"
         required: true
         type: string
+      publish:
+        description: "Push the artifacts to the maven branch (disable for a build-only run)"
+        required: false
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -17,14 +27,46 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 180
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
-      - name: Setup toolchains (JDK, NDK, Rust)
-        uses: ./.github/actions/setup
-        timeout-minutes: 60
+      - name: Set up Java
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
+
+      - name: Set up Android NDK
+        run: |
+          SDKMANAGER=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
+          echo "y" | "$SDKMANAGER" "ndk;$(sed -n 's/^ANDROID_NDK_VERSION=//p' gradle.properties)"
+
+      - name: Set up Rust
+        run: |
+          CHANNEL="$(sed -n 's/^channel *= *"\([^"]*\)".*/\1/p' rust-toolchain.toml)"
+          rustup toolchain install "${CHANNEL}"
+          rustup default "${CHANNEL}"
+          rustup target add --toolchain "${CHANNEL}" armv7-linux-androideabi aarch64-linux-android i686-linux-android x86_64-linux-android
+
+      - name: Rust cache
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+        with:
+          # Public content only: crates.io registry and compiled output (no ~/.cargo/git)
+          path: |
+            backend-lib/target
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/registry/src
+          key: ${{ runner.os }}-hs-rust-${{ hashFiles('backend-lib/Cargo.lock', 'backend-lib/Cargo.toml', 'backend-lib/build.rs', 'rust-toolchain.toml', 'gradle.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-hs-rust-
 
       - name: Build and publish to local maven
         timeout-minutes: 150
@@ -34,12 +76,14 @@ jobs:
         run: ./gradlew publishToMavenLocal --no-daemon
 
       - name: Checkout maven branch
+        if: ${{ inputs.publish }}
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: maven
           path: maven-repo
 
       - name: Copy artifacts into maven branch
+        if: ${{ inputs.publish }}
         run: |
           mkdir -p maven-repo/com
           cp -R "$HOME/.m2/repository/com/zodl" maven-repo/com/
